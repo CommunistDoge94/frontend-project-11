@@ -1,12 +1,14 @@
+import i18n from './i18n.js';
+
 export default (state) => {
   const input = document.getElementById('rss-url');
   const feedback = document.getElementById('rss-feedback');
   const form = document.getElementById('rss-form');
 
   return {
-    highlightError(message) {
+    highlightError(messageKey) {
       input.classList.add('is-invalid');
-      feedback.textContent = message;
+      feedback.textContent = i18n.t(`form.errors.${messageKey}`);
       feedback.style.display = 'block';
     },
     clearError() {

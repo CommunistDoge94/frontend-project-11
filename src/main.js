@@ -35,6 +35,12 @@ form.addEventListener('submit', (e) => {
     })
     .catch((err) => {
       watchedState.form.state = 'failed';
-      watchedState.form.error = err.message;
+      if (err.message.includes('URL')) {
+        watchedState.form.error = 'url';
+      } else if (err.message.includes('существует')) {
+        watchedState.form.error = 'duplicate';
+      } else {
+        watchedState.form.error = 'unknown';
+      }
     });
 });
