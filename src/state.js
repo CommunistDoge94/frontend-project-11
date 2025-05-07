@@ -1,7 +1,8 @@
 export default {
   form: {
-    state: 'idle', // idle, sending, failed, finished
+    state: 'idle',
     error: null,
   },
-  feeds: new Set(),
+  feeds: [],
+  posts: [],
 };
