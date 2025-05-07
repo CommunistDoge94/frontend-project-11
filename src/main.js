@@ -4,6 +4,7 @@ import onChange from 'on-change';
 import validate from './validate.js';
 import initView from './view.js';
 import state from './state.js';
+import i18n from './i18n.js';
 
 const watchedState = onChange(state, (path, value) => {
   const view = initView(watchedState);
@@ -43,4 +44,9 @@ form.addEventListener('submit', (e) => {
         watchedState.form.error = 'unknown';
       }
     });
+});
+
+document.querySelectorAll('[data-i18n]').forEach((el) => {
+  const key = el.getAttribute('data-i18n');
+  el.textContent = i18n.t(key);
 });
