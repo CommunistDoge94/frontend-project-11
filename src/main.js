@@ -1,32 +1,40 @@
-import './style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import onChange from 'on-change';
+import validate from './validate.js';
+import initView from './view.js';
+import state from './state.js';
+
+const watchedState = onChange(state, (path, value) => {
+  const view = initView(watchedState);
+
+  if (path === 'form.error') {
+    view.highlightError(value);
+  }
+
+  if (path === 'form.state' && value === 'finished') {
+    view.clearError();
+    view.resetForm();
+    view.renderFeeds();
+  }
+});
 
 const form = document.getElementById('rss-form');
-const feedsContainer = document.getElementById('feeds');
-const feeds = new Set();
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const url = document.getElementById('rss-url').value.trim();
-  
-  if (!url) return;
-  
-  if (feeds.has(url)) {
-    alert('Данная ссылка уже добавлена.');
-    return;
-  }
+  const input = document.getElementById('rss-url');
+  const url = input.value.trim();
 
-  feeds.add(url);
-  renderFeeds();
-  form.reset();
+  watchedState.form.state = 'sending';
+
+  validate(url, watchedState.feeds)
+    .then((validUrl) => {
+      watchedState.feeds.add(validUrl);
+      watchedState.form.state = 'finished';
+    })
+    .catch((err) => {
+      watchedState.form.state = 'failed';
+      watchedState.form.error = err.message;
+    });
 });
-
-function renderFeeds() {
-  feedsContainer.innerHTML = '';
-  feeds.forEach(url => {
-    const div = document.createElement('div');
-    div.textContent = url;
-    feedsContainer.appendChild(div);
-  });
-}

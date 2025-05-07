@@ -5,8 +5,8 @@
 </head>
 <body>
   <form id="rss-form">
-    <input type="url" id="rss-url" placeholder="Введите ссылку" required>
-    <button type="submit">Добавить</button>
+    <input type="url" id="rss-url" class="form-control" placeholder="Введите ссылку" required>
+    <div class="invalid-feedback" id="rss-feedback"></div>
   </form>
   <div id="feeds"></div>
   <script type="module" src="/src/main.js"></script>
