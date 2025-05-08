@@ -3,8 +3,8 @@ export default {
     form: {
       success: 'RSS успешно загружен',
       errors: {
-        url: 'Ссылка должна быть валидным URL',
-        duplicate: 'RSS уже существует',
+        network: 'Ошибка сети. Проверьте подключение.',
+        invalidRss: 'Ресурс не содержит валидный RSS',
       },
     },
     buttons: {
