@@ -23,11 +23,33 @@ export default (state) => {
     renderFeeds() {
       const feedsContainer = document.getElementById('feeds');
       feedsContainer.innerHTML = '';
-      state.feeds.forEach((url) => {
-        const div = document.createElement('div');
-        div.textContent = url;
-        feedsContainer.appendChild(div);
+      const feedList = document.createElement('ul');
+    
+      state.feeds.forEach(({ title, description }) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<h3>${title}</h3><p>${description}</p>`;
+        feedList.appendChild(li);
       });
+    
+      feedsContainer.appendChild(feedList);
+    },
+    
+    renderPosts() {
+      const postsContainer = document.getElementById('posts');
+      postsContainer.innerHTML = '';
+      const ul = document.createElement('ul');
+    
+      state.posts.forEach(({ title, link }) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.setAttribute('href', link);
+        a.setAttribute('target', '_blank');
+        a.textContent = title;
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+    
+      postsContainer.appendChild(ul);
     },
   };
 };

@@ -5,6 +5,8 @@ import validate from './validate.js';
 import initView from './view.js';
 import state from './state.js';
 import i18n from './i18n.js';
+import loadRss from './loadRss.js';
+import { uniqueId } from 'lodash';
 
 const watchedState = onChange(state, (path, value) => {
   const view = initView(watchedState);
@@ -17,6 +19,7 @@ const watchedState = onChange(state, (path, value) => {
     view.clearError();
     view.resetForm();
     view.renderFeeds();
+    view.renderPosts();
   }
 });
 
@@ -29,21 +32,21 @@ form.addEventListener('submit', (e) => {
 
   watchedState.form.state = 'sending';
 
-  validate(url, watchedState.feeds)
-    .then((validUrl) => {
-      watchedState.feeds.add(validUrl);
-      watchedState.form.state = 'finished';
-    })
-    .catch((err) => {
-      watchedState.form.state = 'failed';
-      if (err.message.includes('URL')) {
-        watchedState.form.error = 'url';
-      } else if (err.message.includes('существует')) {
-        watchedState.form.error = 'duplicate';
-      } else {
-        watchedState.form.error = 'unknown';
-      }
-    });
+  validate(url, watchedState.feeds.map((f) => f.url))
+  .then(() => loadRss(url))
+  .then(({ feed, posts }) => {
+    const feedId = uniqueId();
+    watchedState.feeds.push({ id: feedId, url, ...feed });
+
+    const preparedPosts = posts.map((post) => ({ id: uniqueId(), feedId, ...post }));
+    watchedState.posts.push(...preparedPosts);
+
+    watchedState.form.state = 'finished';
+  })
+  .catch((err) => {
+    watchedState.form.state = 'failed';
+    watchedState.form.error = err.message.includes('invalidRss') ? 'invalidRss' : 'network';
+  });
 });
 
 document.querySelectorAll('[data-i18n]').forEach((el) => {
