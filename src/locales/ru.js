@@ -4,7 +4,7 @@ export default {
       success: 'RSS успешно загружен',
       errors: {
         network: 'Ошибка сети. Проверьте подключение.',
-        invalidRss: 'Ресурс не содержит валидный RSS',
+        invalidRss: 'Источник не содержит валидный RSS',
       },
     },
     buttons: {
