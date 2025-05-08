@@ -7,6 +7,7 @@ import state from './state.js';
 import i18n from './i18n.js';
 import loadRss from './loadRss.js';
 import { uniqueId } from 'lodash';
+import checkForUpdates from './updater.js';
 
 const watchedState = onChange(state, (path, value) => {
   const view = initView(watchedState);
@@ -19,6 +20,10 @@ const watchedState = onChange(state, (path, value) => {
     view.clearError();
     view.resetForm();
     view.renderFeeds();
+    view.renderPosts();
+  }
+
+  if (path === 'posts') {
     view.renderPosts();
   }
 });
@@ -53,3 +58,5 @@ document.querySelectorAll('[data-i18n]').forEach((el) => {
   const key = el.getAttribute('data-i18n');
   el.textContent = i18n.t(key);
 });
+
+checkForUpdates(watchedState);
