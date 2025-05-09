@@ -1,11 +1,18 @@
 import i18n from './i18n.js';
 import { Modal } from 'bootstrap';
 
+let modalInstance = null;
+
 export default (state) => {
   const input = document.getElementById('rss-url');
   const feedback = document.getElementById('rss-feedback');
   const form = document.getElementById('rss-form');
-  const modal = new Modal(document.getElementById('previewModal'));
+
+  if (!modalInstance) {
+    const modalElement = document.getElementById('previewModal');
+    modalInstance = new Modal(modalElement);
+  }
+
   const modalTitle = document.getElementById('previewModalLabel');
   const modalBody = document.querySelector('.modal-body');
 
@@ -28,16 +35,16 @@ export default (state) => {
       const feedsContainer = document.getElementById('feeds');
       feedsContainer.innerHTML = '';
       const feedList = document.createElement('ul');
-    
+
       state.feeds.forEach(({ title, description }) => {
         const li = document.createElement('li');
         li.innerHTML = `<h3>${title}</h3><p>${description}</p>`;
         feedList.appendChild(li);
       });
-    
+
       feedsContainer.appendChild(feedList);
     },
-    
+
     renderPosts() {
       const postsContainer = document.getElementById('posts');
       postsContainer.innerHTML = '';
@@ -60,7 +67,7 @@ export default (state) => {
         button.addEventListener('click', () => {
           modalTitle.textContent = post.title;
           modalBody.textContent = post.description;
-          modal.show();
+          modalInstance.show();
 
           if (!state.readPostIds.includes(post.id)) {
             state.readPostIds.push(post.id);
@@ -73,7 +80,7 @@ export default (state) => {
         li.appendChild(button);
         ul.appendChild(li);
       });
-    
+
       postsContainer.appendChild(ul);
     },
   };
