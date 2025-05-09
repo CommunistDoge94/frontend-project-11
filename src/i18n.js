@@ -1,8 +1,8 @@
-import i18next from 'i18next';
+import i18next from 'i18next'
 
-import ru from './locales/ru.js';
+import ru from './locales/ru.js'
 
-const i18n = i18next.createInstance();
+const i18n = i18next.createInstance()
 
 i18n.init({
   lng: 'ru',
@@ -10,6 +10,6 @@ i18n.init({
   resources: {
     ru,
   },
-});
+})
 
-export default i18n;
+export default i18n
