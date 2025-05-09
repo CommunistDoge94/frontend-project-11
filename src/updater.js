@@ -11,26 +11,26 @@ const checkForUpdates = (state) => {
       .then((response) => {
         const { posts } = parseRss(response.data.contents)
 
-        const existingLinks = state.posts.map((post) => post.link)
+        const existingLinks = state.posts.map(post => post.link)
         const newPosts = posts
-          .filter((post) => !existingLinks.includes(post.link))
-          .map((post) => ({
+          .filter(post => !existingLinks.includes(post.link))
+          .map(post => ({
             id: uniqueId(),
             feedId: feed.id,
             ...post,
-          }));
+          }))
 
         if (newPosts.length > 0) {
           state.posts.push(...newPosts)
         }
       })
       .catch(() => {
-      });
-  });
+      })
+  })
 
   return Promise.all(promises).finally(() => {
     setTimeout(() => checkForUpdates(state), 5000)
-  });
-};
+  })
+}
 
-export default checkForUpdates;
+export default checkForUpdates

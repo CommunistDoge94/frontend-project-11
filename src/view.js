@@ -49,7 +49,7 @@ export default (state) => {
         const li = document.createElement('li')
         li.innerHTML = `<h3>${title}</h3><p>${description}</p>`
         feedList.appendChild(li)
-      });
+      })
 
       feedsContainer.appendChild(feedList)
     },
@@ -88,7 +88,7 @@ export default (state) => {
         li.appendChild(a)
         li.appendChild(button)
         ul.appendChild(li)
-      });
+      })
 
       postsContainer.appendChild(ul)
     },

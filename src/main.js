@@ -28,7 +28,7 @@ const watchedState = onChange(state, (path, value) => {
   if (path === 'posts') {
     view.renderPosts()
   }
-});
+})
 
 const form = document.getElementById('rss-form')
 
@@ -39,33 +39,36 @@ form.addEventListener('submit', (e) => {
 
   watchedState.form.state = 'sending'
 
-  validate(url, watchedState.feeds.map((f) => f.url))
-  .then(() => loadRss(url))
-  .then(({ feed, posts }) => {
-    const feedId = uniqueId()
-    watchedState.feeds.push({ id: feedId, url, ...feed })
+  validate(url, watchedState.feeds.map(f => f.url))
+    .then(() => loadRss(url))
+    .then(({ feed, posts }) => {
+      const feedId = uniqueId()
+      watchedState.feeds.push({ id: feedId, url, ...feed })
 
-    const preparedPosts = posts.map((post) => ({ id: uniqueId(), feedId, ...post }))
-    watchedState.posts.push(...preparedPosts)
+      const preparedPosts = posts.map(post => ({ id: uniqueId(), feedId, ...post }))
+      watchedState.posts.push(...preparedPosts)
 
-    watchedState.form.state = 'finished'
-  })
-  .catch((err) => {
-    watchedState.form.state = 'failed'
-  
-    if (err.name === 'ValidationError') {
-      if (err.message === i18n.t('form.errors.url')) {
-        watchedState.form.error = 'url';
-      } else if (err.message === i18n.t('form.errors.duplicate')) {
-        watchedState.form.error = 'duplicate'
+      watchedState.form.state = 'finished'
+    })
+    .catch((err) => {
+      watchedState.form.state = 'failed'
+
+      if (err.name === 'ValidationError') {
+        if (err.message === i18n.t('form.errors.url')) {
+          watchedState.form.error = 'url';
+        }
+        else if (err.message === i18n.t('form.errors.duplicate')) {
+          watchedState.form.error = 'duplicate'
+        }
+      } 
+      else if (err.message.includes('invalidRss')) {
+        watchedState.form.error = 'invalidRss'
+      } 
+      else {
+        watchedState.form.error = 'network'
       }
-    } else if (err.message.includes('invalidRss')) {
-      watchedState.form.error = 'invalidRss'
-    } else {
-      watchedState.form.error = 'network'
-    }
+    })
   })
-})
 
 document.querySelectorAll('[data-i18n]').forEach((el) => {
   const key = el.getAttribute('data-i18n')

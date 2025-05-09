@@ -34,12 +34,12 @@ export default defineConfig([
       'import/no-cycle': 'error',
       'import/no-self-import': 'error',
       'import/no-useless-path-segments': 'error',
-    }
-  }
+    },
+  },
 ], {
   ignores: [
     'dist/',
     '*.config.js',
     '*.config.mjs',
-  ]
+  ],
 })

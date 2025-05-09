@@ -11,7 +11,7 @@ const parseRss = (content) => {
   const feedDescription = doc.querySelector('channel > description')?.textContent
 
   const items = doc.querySelectorAll('item')
-  const posts = Array.from(items).map((item) => ({
+  const posts = Array.from(items).map(item => ({
     title: item.querySelector('title')?.textContent,
     link: item.querySelector('link')?.textContent,
     description: item.querySelector('description')?.textContent,
