@@ -1,6 +1,8 @@
 import axios from 'axios';
-import parseRss from './parseRss.js';
 import { uniqueId } from 'lodash';
+
+import parseRss from './parseRss.js';
+
 
 const checkForUpdates = (state) => {
   const promises = state.feeds.map((feed) => {

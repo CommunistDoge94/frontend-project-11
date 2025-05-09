@@ -1,5 +1,6 @@
-import i18n from './i18n.js';
 import { Modal } from 'bootstrap';
+
+import i18n from './i18n.js';
 
 let modalInstance = null;
 

@@ -1,12 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import onChange from 'on-change';
+import { uniqueId } from 'lodash';
+
 import validate from './validate.js';
 import initView from './view.js';
 import state from './state.js';
 import i18n from './i18n.js';
 import loadRss from './loadRss.js';
-import { uniqueId } from 'lodash';
 import checkForUpdates from './updater.js';
 
 const watchedState = onChange(state, (path, value) => {
