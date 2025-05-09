@@ -55,24 +55,24 @@ form.addEventListener('submit', (e) => {
 
       if (err.name === 'ValidationError') {
         if (err.message === i18n.t('form.errors.url')) {
-          watchedState.form.error = 'url';
+          watchedState.form.error = 'url'
         }
         else if (err.message === i18n.t('form.errors.duplicate')) {
           watchedState.form.error = 'duplicate'
         }
-      } 
+      }
       else if (err.message.includes('invalidRss')) {
         watchedState.form.error = 'invalidRss'
-      } 
+      }
       else {
         watchedState.form.error = 'network'
       }
     })
-  })
+})
 
 document.querySelectorAll('[data-i18n]').forEach((el) => {
   const key = el.getAttribute('data-i18n')
   el.textContent = i18n.t(key)
-});
+})
 
 checkForUpdates(watchedState)
