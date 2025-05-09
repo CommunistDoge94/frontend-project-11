@@ -19,6 +19,7 @@ const watchedState = onChange(state, (path, value) => {
 
   if (path === 'form.state' && value === 'finished') {
     view.clearError();
+    view.showSuccessMessage();
     view.resetForm();
     view.renderFeeds();
     view.renderPosts();
