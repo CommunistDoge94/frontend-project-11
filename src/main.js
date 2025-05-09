@@ -50,7 +50,18 @@ form.addEventListener('submit', (e) => {
   })
   .catch((err) => {
     watchedState.form.state = 'failed';
-    watchedState.form.error = err.message.includes('invalidRss') ? 'invalidRss' : 'network';
+  
+    if (err.name === 'ValidationError') {
+      if (err.message === i18n.t('form.errors.url')) {
+        watchedState.form.error = 'url';
+      } else if (err.message === i18n.t('form.errors.duplicate')) {
+        watchedState.form.error = 'duplicate';
+      }
+    } else if (err.message.includes('invalidRss')) {
+      watchedState.form.error = 'invalidRss';
+    } else {
+      watchedState.form.error = 'network';
+    }
   });
 });
 
