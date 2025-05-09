@@ -1,9 +1,13 @@
 import i18n from './i18n.js';
+import { Modal } from 'bootstrap';
 
 export default (state) => {
   const input = document.getElementById('rss-url');
   const feedback = document.getElementById('rss-feedback');
   const form = document.getElementById('rss-form');
+  const modal = new Modal(document.getElementById('previewModal'));
+  const modalTitle = document.getElementById('previewModalLabel');
+  const modalBody = document.querySelector('.modal-body');
 
   return {
     highlightError(messageKey) {
@@ -38,14 +42,35 @@ export default (state) => {
       const postsContainer = document.getElementById('posts');
       postsContainer.innerHTML = '';
       const ul = document.createElement('ul');
-    
-      state.posts.forEach(({ title, link }) => {
+
+      state.posts.forEach((post) => {
         const li = document.createElement('li');
+        li.classList.add('d-flex', 'justify-content-between', 'align-items-start', 'mb-2');
+
         const a = document.createElement('a');
-        a.setAttribute('href', link);
+        a.setAttribute('href', post.link);
         a.setAttribute('target', '_blank');
-        a.textContent = title;
+        a.classList.add(state.readPostIds.includes(post.id) ? 'fw-normal' : 'fw-bold');
+        a.textContent = post.title;
+
+        const button = document.createElement('button');
+        button.textContent = i18n.t('buttons.preview');
+        button.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+        button.setAttribute('type', 'button');
+        button.addEventListener('click', () => {
+          modalTitle.textContent = post.title;
+          modalBody.textContent = post.description;
+          modal.show();
+
+          if (!state.readPostIds.includes(post.id)) {
+            state.readPostIds.push(post.id);
+          }
+
+          this.renderPosts();
+        });
+
         li.appendChild(a);
+        li.appendChild(button);
         ul.appendChild(li);
       });
     

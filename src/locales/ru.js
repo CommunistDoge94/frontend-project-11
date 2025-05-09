@@ -12,6 +12,7 @@ export default {
     },
     buttons: {
       submit: 'Добавить',
+      preview: 'Предпросмотр',
     },
     placeholders: {
       input: 'Введите ссылку',
