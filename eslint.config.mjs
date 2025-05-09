@@ -16,10 +16,6 @@ export default defineConfig([
         ...globals.node
       }
     },
-    ignores: [
-      '*.config.js',
-      '*.config.mjs',
-    ],
     rules: {
       'no-var': 'error',
       'prefer-const': 'error',
@@ -47,4 +43,10 @@ export default defineConfig([
       ]
     }
   }
-]);
+], {
+  ignores: [
+    'dist/',
+    '*.config.js',
+    '*.config.mjs',
+  ]
+});
