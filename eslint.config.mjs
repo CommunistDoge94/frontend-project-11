@@ -21,7 +21,7 @@ export default defineConfig([
       'prefer-const': 'error',
       'object-shorthand': ['error', 'always'],
       'quote-props': ['error', 'as-needed'],
-      'arrow-parens': ['error', 'always'],
+      'arrow-parens': 'off',
       'no-duplicate-imports': 'error',
       'dot-notation': 'error',
       'prefer-destructuring': ['error', { object: true, array: false }],
