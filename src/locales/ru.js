@@ -3,16 +3,17 @@ export default {
     form: {
       success: 'RSS успешно загружен',
       errors: {
-        network: 'Ошибка сети. Проверьте подключение.',
-        invalidRss: 'Источник не содержит валидный RSS',
+        network: 'Ошибка сети',
+        invalidRss: 'Ресурс не содержит валидный RSS',
         url: 'Ссылка должна быть валидным URL',
         duplicate: 'RSS уже существует',
         unknown: 'Произошла неизвестная ошибка',
+        required: 'Не должно быть пустым',
       },
     },
     buttons: {
       submit: 'Добавить',
-      preview: 'Предпросмотр',
+      preview: 'Просмотр',
     },
     placeholders: {
       input: 'Введите ссылку',
