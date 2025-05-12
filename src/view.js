@@ -71,17 +71,8 @@ export default (state, i18n) => {
         button.textContent = i18n.t('buttons.preview')
         button.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2')
         button.setAttribute('type', 'button')
-        button.addEventListener('click', () => {
-          modalTitle.textContent = post.title
-          modalBody.textContent = post.description
-          modalInstance.show()
-
-          if (!state.readPostIds.includes(post.id)) {
-            state.readPostIds.push(post.id)
-          }
-
-          this.renderPosts()
-        })
+        button.dataset.postId = post.id
+        button.classList.add('preview-button')
 
         li.appendChild(a)
         li.appendChild(button)

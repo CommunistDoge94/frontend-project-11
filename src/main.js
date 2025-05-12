@@ -5,7 +5,6 @@ import { uniqueId } from 'lodash'
 import * as yup from 'yup'
 
 import initView from './view.js'
-import state from './state.js'
 import { i18n, initI18n } from './i18n.js'
 import loadRss from './loadRss.js'
 import checkForUpdates from './updater.js'
@@ -24,6 +23,16 @@ initI18n().then(() => {
   const validate = (url, existingFeeds) => {
     const schema = yup.string().required().url().notOneOf([...existingFeeds])
     return schema.validate(url)
+  }
+
+  const state = {
+    form: {
+      state: 'idle',
+      error: null,
+    },
+    feeds: [],
+    posts: [],
+    readPostIds: [],
   }
   
   const watchedState = onChange(state, (path, value) => {
@@ -87,6 +96,7 @@ initI18n().then(() => {
       })
   })
 
+  
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const key = el.getAttribute('data-i18n')
   console.log(`[i18n] ${key} → ${i18n.t(key)}`)  // 👈 отладка
