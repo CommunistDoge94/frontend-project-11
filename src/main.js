@@ -3,6 +3,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import onChange from 'on-change'
 import { uniqueId } from 'lodash'
 import * as yup from 'yup'
+import axios from 'axios'
+import { Modal } from 'bootstrap'
 
 import initView from './view.js'
 import { i18n, initI18n } from './i18n.js'
@@ -95,15 +97,43 @@ initI18n().then(() => {
       })
   })
 
-  
+  document.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('preview-button')) return
+
+    const { postId } = e.target.dataset
+    const post = watchedState.posts.find((p) => p.id === postId)
+    if (!post) return
+
+    if (!watchedState.readPostIds.includes(postId)) {
+      watchedState.readPostIds.push(postId)
+    }
+
+    const modalElement = document.getElementById('previewModal')
+    const modal = new Modal(modalElement)
+    const modalTitle = document.getElementById('previewModalLabel')
+    const modalBody = document.querySelector('.modal-body')
+
+    modalTitle.textContent = post.title
+    modalBody.textContent = post.description
+    modal.show()
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n')
+      if (el.tagName === 'INPUT') {
+        el.setAttribute('placeholder', i18n.t(key))
+      } else {
+        el.textContent = i18n.t(key)
+      }
+    })
+  })
+
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const key = el.getAttribute('data-i18n')
-  console.log(`[i18n] ${key} → ${i18n.t(key)}`)  // 👈 отладка
-  if (el.tagName === 'INPUT') {
-    el.setAttribute('placeholder', i18n.t(key))
-  } else {
-    el.textContent = i18n.t(key)
-  }
+    if (el.tagName === 'INPUT') {
+      el.setAttribute('placeholder', i18n.t(key))
+    } else {
+      el.textContent = i18n.t(key)
+    }
   })
 
   const checkForUpdates = (state) => {
@@ -127,8 +157,7 @@ initI18n().then(() => {
             state.posts.push(...newPosts)
           }
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     })
   
     return Promise.all(promises).finally(() => {
