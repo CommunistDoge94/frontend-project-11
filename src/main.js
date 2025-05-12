@@ -7,7 +7,6 @@ import * as yup from 'yup'
 import initView from './view.js'
 import { i18n, initI18n } from './i18n.js'
 import loadRss from './loadRss.js'
-import checkForUpdates from './updater.js'
 
 initI18n().then(() => {
   yup.setLocale({
@@ -106,6 +105,36 @@ initI18n().then(() => {
     el.textContent = i18n.t(key)
   }
   })
+
+  const checkForUpdates = (state) => {
+    const promises = state.feeds.map((feed) => {
+      const proxyUrl = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed.url)}`
+  
+      return axios.get(proxyUrl)
+        .then((response) => {
+          const { posts } = parseRss(response.data.contents)
+  
+          const existingLinks = state.posts.map(post => post.link)
+          const newPosts = posts
+            .filter(post => !existingLinks.includes(post.link))
+            .map(post => ({
+              id: uniqueId(),
+              feedId: feed.id,
+              ...post,
+            }))
+  
+          if (newPosts.length > 0) {
+            state.posts.push(...newPosts)
+          }
+        })
+        .catch(() => {
+        })
+    })
+  
+    return Promise.all(promises).finally(() => {
+      setTimeout(() => checkForUpdates(state), 5000)
+    })
+  }
 
   checkForUpdates(watchedState)
 })
