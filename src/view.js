@@ -1,10 +1,8 @@
 import { Modal } from 'bootstrap'
 
-import i18n from './i18n.js'
-
 let modalInstance = null
 
-export default (state) => {
+export default (state, i18n) => {
   const input = document.getElementById('rss-url')
   const feedback = document.getElementById('rss-feedback')
   const form = document.getElementById('rss-form')
