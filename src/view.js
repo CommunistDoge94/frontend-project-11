@@ -71,10 +71,10 @@ export default (state, i18n) => {
     },
 
     updatePostLink(postId) {
-      const link = document.querySelector(`a[href="${postId}"]`);
+      const link = document.querySelector(`a[href="${postId}"]`)
       if (link) {
-        link.classList.remove('fw-bold');
-        link.classList.add('fw-normal');
+        link.classList.remove('fw-bold')
+        link.classList.add('fw-normal')
       }
     },
   }

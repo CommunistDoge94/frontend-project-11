@@ -35,7 +35,7 @@ initI18n().then(() => {
     posts: [],
     readPostIds: [],
   }
-  
+
   const watchedState = onChange(state, (path, value) => {
     if (path === 'form.error') {
       view.highlightError(value)
@@ -100,7 +100,7 @@ initI18n().then(() => {
     if (!e.target.classList.contains('preview-button')) return
 
     const { postId } = e.target.dataset
-    const post = watchedState.posts.find((p) => p.id === postId)
+    const post = watchedState.posts.find(p => p.id === postId)
     if (!post) return
 
     if (!watchedState.readPostIds.includes(postId)) {
@@ -121,7 +121,8 @@ initI18n().then(() => {
       const key = el.getAttribute('data-i18n')
       if (el.tagName === 'INPUT') {
         el.setAttribute('placeholder', i18n.t(key))
-      } else {
+      } 
+      else {
         el.textContent = i18n.t(key)
       }
     })
@@ -139,11 +140,11 @@ initI18n().then(() => {
   const checkForUpdates = (state) => {
     const promises = state.feeds.map((feed) => {
       const proxyUrl = `https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed.url)}`
-  
+
       return axios.get(proxyUrl)
         .then((response) => {
           const { posts } = parseRss(response.data.contents)
-  
+
           const existingLinks = state.posts.map(post => post.link)
           const newPosts = posts
             .filter(post => !existingLinks.includes(post.link))
@@ -152,14 +153,14 @@ initI18n().then(() => {
               feedId: feed.id,
               ...post,
             }))
-  
+
           if (newPosts.length > 0) {
             state.posts.push(...newPosts)
           }
         })
         .catch(() => {})
     })
-  
+
     return Promise.all(promises).finally(() => {
       setTimeout(() => checkForUpdates(state), 5000)
     })
