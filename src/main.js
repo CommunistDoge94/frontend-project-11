@@ -37,7 +37,6 @@ initI18n().then(() => {
   }
   
   const watchedState = onChange(state, (path, value) => {
-    console.log(`[onChange] ${path} =`, value);
     if (path === 'form.error') {
       view.highlightError(value)
     }
