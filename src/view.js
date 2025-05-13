@@ -1,19 +1,7 @@
-import { Modal } from 'bootstrap'
-
-let modalInstance = null
-
 export default (state, i18n) => {
   const input = document.getElementById('rss-url')
   const feedback = document.getElementById('rss-feedback')
   const form = document.getElementById('rss-form')
-
-  if (!modalInstance) {
-    const modalElement = document.getElementById('previewModal')
-    modalInstance = new Modal(modalElement)
-  }
-
-  const modalTitle = document.getElementById('previewModalLabel')
-  const modalBody = document.querySelector('.modal-body')
 
   return {
     highlightError(messageKey) {
