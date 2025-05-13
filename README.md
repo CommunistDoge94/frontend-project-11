@@ -5,6 +5,34 @@
 [Ссылка](https://rss-agregator-coral-seven.vercel.app/)
 
 --- 
+# Минимальные требования
+
+- **Node.js** - 18.0.0
+- **npm** - 9.x
+- **Браузер** (Предпочтительно Chrome)
+
+---
+# Установка и использование
+
+1. Скопируйте репозиторий
+
+```bash
+git clone https://github.com/CommunistDoge94/frontend-project-11
+```
+
+2. Установите зависимости
+
+```bash
+npm install
+```
+
+3. Запустите приложение
+
+```bash
+npm run dev
+```
+
+---
 
 [![Actions Status](https://github.com/CommunistDoge94/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/CommunistDoge94/frontend-project-11/actions)
 
