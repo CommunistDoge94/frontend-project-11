@@ -69,5 +69,13 @@ export default (state, i18n) => {
 
       postsContainer.appendChild(ul)
     },
+
+    updatePostLink(postId) {
+      const link = document.querySelector(`a[href="${postId}"]`);
+      if (link) {
+        link.classList.remove('fw-bold');
+        link.classList.add('fw-normal');
+      }
+    },
   }
 }

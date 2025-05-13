@@ -105,6 +105,7 @@ initI18n().then(() => {
 
     if (!watchedState.readPostIds.includes(postId)) {
       watchedState.readPostIds.push(postId)
+      view.updatePostLink(post.link)
     }
 
     const modalElement = document.getElementById('previewModal')
