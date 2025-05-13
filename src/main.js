@@ -121,7 +121,7 @@ initI18n().then(() => {
       const key = el.getAttribute('data-i18n')
       if (el.tagName === 'INPUT') {
         el.setAttribute('placeholder', i18n.t(key))
-      } 
+      }
       else {
         el.textContent = i18n.t(key)
       }
@@ -132,7 +132,8 @@ initI18n().then(() => {
     const key = el.getAttribute('data-i18n')
     if (el.tagName === 'INPUT') {
       el.setAttribute('placeholder', i18n.t(key))
-    } else {
+    }
+    else {
       el.textContent = i18n.t(key)
     }
   })
