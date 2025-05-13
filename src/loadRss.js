@@ -40,4 +40,4 @@ const loadRss = (url) => {
     })
 }
 
-export default loadRss
+export { loadRss, parseRss }

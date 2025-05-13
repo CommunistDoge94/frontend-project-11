@@ -8,7 +8,7 @@ import { Modal } from 'bootstrap'
 
 import initView from './view.js'
 import { i18n, initI18n } from './i18n.js'
-import loadRss from './loadRss.js'
+import { loadRss, parseRss } from './loadRss.js'
 
 initI18n().then(() => {
   yup.setLocale({
